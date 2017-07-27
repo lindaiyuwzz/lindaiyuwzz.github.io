@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <style>
+        canvas {
+            border: 1px solid red
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="800" height="600" style="display:block;margin:0 auto"></canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector("canvas")
+    var ctx = canvas.getContext("2d");
+    function Pai(data){
+        for(var key in data){
+            this[key] = data[key];
+        }
+        this.init();
+    }
+    Pai.prototype = {
+        constructor:Pai,
+        init:function(){
+           this.zero();
+        },
+        // 把圆等分
+        zero:function(){
+            for(var i = 0;i<this.num;i++){
+                // 每个扇形的弧度
+                var radian = 2*Math.PI/this.num;
+                var end = this.x+radian;
+                ctx.beginPath();
+                ctx.moveTo(this.x,this.y);
+                ctx.arc(this.x,this.y,this.radia,-0.5*Math.PI+radian*i,-0.5*Math.PI+radian*(i+1));
+                ctx.fillStyle = this.color();
+                ctx.fill();
+            }
+        },
+        // 随机颜色
+        color:function(){
+            var str = "#";
+            var arr = [0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"];
+            for(var i= 0;i<6;i++){
+                str += arr[Math.floor(Math.random()*arr.length)];
+            }
+            return str;
+        }
+    }
+    var p =new Pai({
+        num:10,
+        x:300,
+        y:300,
+        radia:150
+    })
+    
+</script>
